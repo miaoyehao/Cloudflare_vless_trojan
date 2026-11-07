@@ -1,55 +1,6 @@
 
-<img width="766" height="181" alt="9edae247c703bef887a2d680c77c3c17" src="https://github.com/user-attachments/assets/a641b36d-59ba-41e4-ac6f-6622f786187e" />
+# 搭建方式1：Cloudflare-workers/pages代理脚本 V2026.9
 
-# 搭建方式1：Cloudflare-Socks5/Http本地代理脚本
-### 支持基于Workers域名、Pages域名、自定义域名
-### 可选 ECH-TLS、普通TLS、无TLS 三种代理模式，应对各种阻断封杀
-
-#### 以下脚本或Docker镜像：```ygkkk/cfsh```，建议在软路由等本地平台使用，脚本快捷方式：bash cfsh.sh
-
-```
-curl -sSL https://raw.githubusercontent.com/yonggekkk/Cloudflare_vless_trojan/main/s5http_wkpgs/cfsh.sh -o cfsh.sh && chmod +x cfsh.sh && bash cfsh.sh
-```
-
-| 变量作用 | 变量名称| 变量值要求| 变量默认值| 变量要求|
-| :--- | :--- | :--- | :--- | :--- |
-| 1、CF服务端域名:端口 | cf_domain | 域名:443系端口或者80系端口 | 无，必须CF处获取workers/pages/自定义的域名 | 必填 |
-| 2、CF服务端密钥 | token | 与服务端一样的字母数字 | 无密钥 | 可选 |
-| 3、客户端本地IP端口 | client_ip | 10000-65000之间 | 30000 | 可选 |
-| 4、指定优选IP/域名 | cf_cdnip | CF的优选IP或者优选域名 | yg(可任意1-13数字).ygkkk.dpdns.org，中国移动基本上是落地香港，电信联通基本上落地日本新加坡| 可选，也推荐使用```cloudflare-ech.com```这个优选域名，基本上落地美欧地区 |
-| 5、指定ProxyIP | pyip | ipv4或[ipv6]或域名 | 使用服务端ProxyIP | 可选 |
-| 6、DNS指定DoH | dns | DNS的DoH格式 | dns.alidns.com/dns-query | 可选 |
-| 7、ECH开关 | enable_ech | y=开启，n=关闭 | 开启ECH | 可选 |
-| 8、分流开关 | cnrule | y=国内外分流代理，n=全局代理 | 国内外分流代理 | 可选 |
-
-| 三模式变量设置要点 | ECH-TLS | 普通TLS| 无TLS|
-| :--- | :--- | :--- | :--- |
-| 1、cf_domain（CF服务端域名:端口） | workers/pages/自定义的域名:443系端口 | pages/自定义的域名:443系端口 | workers域名:80系端口 | 
-| 2、enable_ech（ECH开关） | y开启 | n关闭 | y开启/n关闭 | 
-
-注意：
-
-CF80系端口：80(推荐)、8080、8880、2052、2082、2086、2095
-
-CF443系端口：443(推荐)、2053、2083、2087、2096、8443
-
-推荐非CF网站IP查询（显示CF的104.28/2a09的IP）：https://www.whatismyip.com
-
-推荐CF网站IP查询（显示proxyip的IP）：https://ip.sb
-
-ProxyIP是否有效影响着能否访问CF网站，比如CF官网、X推特、ChatGPT等网站
-
-视频教程：[CF Socks5/Http免费代理教程：揭秘ECH Workers利弊；支持三种代理模式多端口复用，客户端自定义proxyip](https://youtu.be/Y_SHcD3prt8)
-
-调侃：所谓ech workers在意义上过于狭隘。ech只是加密形式中的一种，workers更是CF服务形式中的一种，个人觉得这种代理模式的展现，取名为CF Socks5/Http更为全面且合理，与CF vless等前辈们遥相呼应
-
-------------------------------------------------------------
-
-<img width="1182" height="517" alt="e5dfbfd7c9e6f15d4bd1c8409eecdffc" src="https://github.com/user-attachments/assets/ac0bcef0-54f9-4290-8c04-f84bbbe1cdf8" />
-
-------------------------------------------------------------
-
-# 搭建方式2：Cloudflare-workers/pages代理脚本【目前版本：25.5.4】
 ### 1、本项目仅支持本地化部署
 ### 2、本项目配置都为本地化编辑，不使用订阅器、订阅转换等第三方外链引用
 ### 3、无需担心节点订阅信息被订阅器作者或者订阅转换作者后台查看
@@ -58,28 +9,16 @@ ProxyIP是否有效影响着能否访问CF网站，比如CF官网、X推特、Ch
 #### 1、懒人小白专用！默认节点都为CF官方IP，无需频繁更新订阅获取客户端优选IP
 #### 2、为减少新手小白额外的成本，本项目不推荐使用自定义域名，如果你一定要用自定义域名，也可以
 #### 3、当在CF点击部署按钮后，可直接手搓节点或者使用分享链接，最多设置一个uuid/密码，其他不用改
-#### 4、Workers方式：支持vless+ws+tls、trojan+ws+tls、vless+ws、trojan+ws代理节点
+#### 4、Workers方式（仅支持自定义域）：支持vless+ws+tls、trojan+ws+tls、vless+ws、trojan+ws代理节点
 #### 5、Pages方式：支持vless+ws+tls、trojan+ws+tls代理节点
 #### 6、支持单节点链接、聚合通用节点链接、聚合通用节点订阅、sing-box节点订阅、clash节点订阅
-#### 7、VLESS仅nat64套壳版将自动填充proxyip，无需且不支持proxyip设置，由[badafans](https://github.com/badafans)提供代码
 -------------------------------------------------------------
 
 ### 交流平台：[甬哥博客地址](https://ygkkk.blogspot.com)、[甬哥YouTube频道](https://www.youtube.com/@ygkkk)、[甬哥TG电报群组](https://t.me/+jZHc6-A-1QQ5ZGVl)、[甬哥TG电报频道](https://t.me/+DkC9ZZUgEFQzMTZl)
 
 --------------------------------
 
-### 推荐新手用户请先看以下四个入门视频教程：
-
-[2025.9.8更新：半混淆文件使用说明；解决你对优选IP的长期困惑；本轮1101报错的未来警示](https://youtu.be/rUpCuXTQqmQ)
-
-[永久免费的cf vless workers原生域名节点 | 无需自定义域名 | 无需优选IP订阅 | 无需面版控制台 | 只需保存两个参数 | 自建无限不死节点！](https://youtu.be/PpPKzOYLZQg)
-
-[永久免费的cf vless pages原生域名节点 | NAT64生成ProxyIP的重要说明 | CF节点为何有些网站上不了？](https://youtu.be/yR-JpVV6SHs)
-
-[CF vless/trojan免费节点混淆时代来临：workers/pages代码混淆后详细设置的更新说明；1101报错总结](https://youtu.be/QSFaP5EVI04)
-
-
-## 一：CF Vless节点可设置的变量内容 (仅nat64套壳版无需且不支持设置proxyip)
+## 一：CF Vless节点可设置的变量内容 
 
 | 变量作用 | 变量名称| 变量值要求| 变量默认值| 变量要求|
 | :--- | :--- | :--- | :--- | :--- |
@@ -154,15 +93,15 @@ ProxyIP是否有效影响着能否访问CF网站，比如CF官网、X推特、Ch
 
 ## 五：查看配置信息与分享链接
 
-CF Vless：在网页地址栏输入 https:// workers域名 或者 pages域名 或者 自定义域名 /自定义uuid
+CF Vless：在网页地址栏输入 https:// pages域名 或者 自定义域名 /自定义uuid
 
-CF Trojan：在网页地址栏输入 https:// workers域名 或者 pages域名 或者 自定义域名 /自定义密码
+CF Trojan：在网页地址栏输入 https:// pages域名 或者 自定义域名 /自定义密码
 
 注意：
 
-1、workers域名 或者 pages域名 或者 自定义域名如果都被墙，必须开代理才能打开
+1、pages域名 或者 自定义域名如果都被墙，必须开代理才能打开
 
-2、使用自定域时，原先workers域名 或者 pages域名下的配置信息与分享链接依旧可用
+2、使用自定域时，pages域名下的配置信息与分享链接依旧可用
 
 ---------------------------------
 
@@ -206,21 +145,7 @@ CF官方优选443系端口：443、2053、2083、2087、2096、8443
 
 2606:4700::0 需IPV6环境
 
-CDN优选域名：yg1.ygkkk.dpdns.org (yg1中的1，可换为1-11中任意数字，甬哥维护)
-
-本地电脑端优选项目推荐（可在上面代码区直接下载）：
-
-1、CDN优选域名V23.8.18 (电脑win64)
-
-2、CF优选反代IP (电脑版，带测速)
-
-3、CF优选官方IP (电脑版、可选择部分国家)
-
-4、CF优选官方IP (美、亚、欧三地区无交互电脑版！强烈推荐！点击[视频教程](https://youtu.be/6kKIzObEZ2c))
-
-5、CF优选官方IP (电脑版，带测速)
-
-注意：多个CF节点在客户端使用负载均衡或者自动选择时，建议所有应用的节点都为同一个国家地区，以避免不同国家之间的IP乱跳现象
+CDN优选域名：yg1.ygkkk.dpdns.org (yg1中的1，可换为1-11中任意数字)
 
 ---------------------------------
 
@@ -228,21 +153,17 @@ CDN优选域名：yg1.ygkkk.dpdns.org (yg1中的1，可换为1-11中任意数字
 
 #### 启用分片(Fragment)功能的好处：无视域名被墙TLS阻断，从而让workers等被墙的域名支持TLS节点。
 
-#### 待验证：目前workers的TLS分片功能可能已失效
-
 #### 提示：未被墙TLS阻断的自定义域名或pages域名无需开启分片就可使用TLS节点
  
 目前支持该功能的平台客户端如下（点击名称即跳转到官方下载地址）
 
-1、安卓Android：[v2rayNG](https://github.com/2dust/v2rayNG/tags)、[Nekobox](https://github.com/starifly/NekoBoxForAndroid/releases)、[Karing](https://github.com/KaringX/karing/tags)、v2box
+1、安卓Android：[v2rayNG](https://github.com/2dust/v2rayNG/tags)、[Nekobox](https://github.com/starifly/NekoBoxForAndroid/releases)、[Karing](https://github.com/KaringX/karing/tags)、clash/mihomo、sing-box各类客户端都可
 
-2、电脑Windows：[v2rayN](https://github.com/2dust/v2rayN/tags)、[Hiddify](https://github.com/hiddify/hiddify-next/tags)、[Karing](https://github.com/KaringX/karing/tags)
+2、电脑Windows：[v2rayN](https://github.com/2dust/v2rayN/tags)、[Hiddify](https://github.com/hiddify/hiddify-next/tags)、[Karing](https://github.com/KaringX/karing/tags)、clash/mihomo、sing-box各类客户端都可
 
-3、苹果Ios：Karing、Hiddify Proxy & VPN、Shadowrocket(小火箭)、Streisand、v2box
+3、苹果Ios：Karing、Hiddify Proxy & VPN、Shadowrocket(小火箭)、Streisand
 
 4、软路由：passwall、ssr-plus、homeproxy
-
-注意：其他平台客户端未开启分片功能情况下，workers域的6个443系TLS节点是不可用的
 
 注意：Shadowrocket(小火箭)、v2box、v2rayn、v2rayng客户端对trojan+ws有强制开启TLS问题，造成trojan+ws不通。且clash订阅没有trojan+ws节点。特此说明
 
@@ -252,17 +173,11 @@ CDN优选域名：yg1.ygkkk.dpdns.org (yg1中的1，可换为1-11中任意数字
 
 ### CF视频教程集合：
 
+2026.9.19最新：[CF免费节点新时代：无视1101报错，Workers+Pages精简部署方案，再次解读CF节点的奥秘](https://youtu.be/KWtqRFbi568)
+
 [🥇搭建代理9大问题排行榜：第4名全网99%的人被误导！第1名每个人都被折腾到爆！全程高能！](https://youtu.be/pJwJBqBkcfw)
 
-[CF workers永久免费vless节点搭建教程（一）：全网首发演示跳IP现象，解密两大节点使用技巧，优选IP、优选域名的优缺点说明](https://youtu.be/9V9CQxmfwoA)
-
-[CF workers永久免费vless节点搭建教程（二）：优选反代IP一键脚本发布，pages部署教程，多平台客户端设置说明，独家探讨CF免费代理敏感安全问题](https://youtu.be/McdRoLZeTqg)
-
-[CF workers永久免费Trojan节点搭建教程（三）：无需自定义域名，workers与pages两方案部署优选IP节点；CF Trojan与CF Vless对比总结；如何看待Trojan被识别](https://youtu.be/lmhhL8M1k0I)
-
 强烈推荐：[CF vless/trojan永久免费节点教程（四）：解读优选官方IP、优选反代IP、优选域名三者的关系与特点；ProxyIP存在的意义](https://youtu.be/NaLd-orwFUE)
-
-强烈推荐：[CF vless/trojan永久免费节点教程（五）：不用自定义域名？不用频繁优选IP？不用订阅器？总结CF节点与域名的结构关系图](https://youtu.be/8s-ELRuFaeE)
 
 强烈推荐：[CF vless/trojan永久免费节点教程（六）：节点不能用，问题出在哪？多平台免费客户端设置指南及避坑说明](https://youtu.be/8E0l0nQWLxs)
 
@@ -272,31 +187,52 @@ CDN优选域名：yg1.ygkkk.dpdns.org (yg1中的1，可换为1-11中任意数字
 
 [直播精选回顾：CF workers vless免费节点四大特点，节点被断流阻断问题](https://youtu.be/9OHGpWlfdJ0)
 
-[ClouDNS永久免费域名最终教程：CF pages vless自定义域名直接部署](https://youtu.be/PN0BLANXh4I)
-
-[CF vless/trojan免费节点混淆时代来临：workers/pages代码混淆后详细设置的更新说明；1101报错总结](https://youtu.be/QSFaP5EVI04)
-
-
 ---------------------------------
----------------------------------
----------------------------------
----------------------------------
-## 优选域名、优选官方IP一键脚本（在本地网络环境下利用termux或者ish运行）：
 
-1、安卓请使用termux官方项目下载客户端（谷歌商店下载的不可用！）：https://github.com/termux/termux-app/releases/tag/v0.118.1
 
-首次安装后，请先安装依赖：```pkg upgrade```，然后运行以下你要使用的脚本
+# 搭建方式2：Cloudflare-Socks5/Http本地代理脚本
+### 支持基于Workers域名、Pages域名、自定义域名
+### 可选 ECH-TLS、普通TLS、无TLS 三种代理模式，应对各种阻断封杀
 
-2、苹果手机用户，由于ISH最新版有BUG导致脚本运行卡住，请使用ISH_1.2.2版本，可以用巨魔先安装再降级，网上也有其它指定旧版IPA安装的教程
+#### 以下脚本或Docker镜像：```ygkkk/cfsh```，建议在软路由等本地平台使用，脚本快捷方式：bash cfsh.sh
 
-首次安装后，请先安装依赖：```apk add curl bash```，然后运行以下你要使用的脚本
-
--------------------------------------------------------------
-
-### 脚本：CF-CDN优选公共大厂域名脚本，苹果安卓手机平板专用：
 ```
-curl -sSL https://gitlab.com/rwkgyg/CFwarp/raw/main/point/CFcdnym.sh -o CFcdnym.sh && chmod +x CFcdnym.sh && bash CFcdnym.sh
+curl -sSL https://raw.githubusercontent.com/yonggekkk/Cloudflare_vless_trojan/main/s5http_wkpgs/cfsh.sh -o cfsh.sh && chmod +x cfsh.sh && bash cfsh.sh
 ```
+
+| 变量作用 | 变量名称| 变量值要求| 变量默认值| 变量要求|
+| :--- | :--- | :--- | :--- | :--- |
+| 1、CF服务端域名:端口 | cf_domain | 域名:443系端口或者80系端口 | 无，必须CF处获取workers/pages/自定义的域名 | 必填 |
+| 2、CF服务端密钥 | token | 与服务端一样的字母数字 | 无密钥 | 可选 |
+| 3、客户端本地IP端口 | client_ip | 10000-65000之间 | 30000 | 可选 |
+| 4、指定优选IP/域名 | cf_cdnip | CF的优选IP或者优选域名 | yg(可任意1-13数字).ygkkk.dpdns.org，中国移动基本上是落地香港，电信联通基本上落地日本新加坡| 可选，也推荐使用```cloudflare-ech.com```这个优选域名，基本上落地美欧地区 |
+| 5、指定ProxyIP | pyip | ipv4或[ipv6]或域名 | 使用服务端ProxyIP | 可选 |
+| 6、DNS指定DoH | dns | DNS的DoH格式 | dns.alidns.com/dns-query | 可选 |
+| 7、ECH开关 | enable_ech | y=开启，n=关闭 | 开启ECH | 可选 |
+| 8、分流开关 | cnrule | y=国内外分流代理，n=全局代理 | 国内外分流代理 | 可选 |
+
+| 三模式变量设置要点 | ECH-TLS | 普通TLS| 无TLS|
+| :--- | :--- | :--- | :--- |
+| 1、cf_domain（CF服务端域名:端口） | workers/pages/自定义的域名:443系端口 | pages/自定义的域名:443系端口 | workers域名:80系端口 | 
+| 2、enable_ech（ECH开关） | y开启 | n关闭 | y开启/n关闭 | 
+
+注意：
+
+CF80系端口：80(推荐)、8080、8880、2052、2082、2086、2095
+
+CF443系端口：443(推荐)、2053、2083、2087、2096、8443
+
+推荐非CF网站IP查询（显示CF的104.28/2a09的IP）：https://www.whatismyip.com
+
+推荐CF网站IP查询（显示proxyip的IP）：https://ip.sb
+
+ProxyIP是否有效影响着能否访问CF网站，比如CF官网、X推特、ChatGPT等网站
+
+视频教程：[CF Socks5/Http免费代理教程：揭秘ECH Workers利弊；支持三种代理模式多端口复用，客户端自定义proxyip](https://youtu.be/Y_SHcD3prt8)
+
+
+<img width="1182" height="517" alt="e5dfbfd7c9e6f15d4bd1c8409eecdffc" src="https://github.com/user-attachments/assets/ac0bcef0-54f9-4290-8c04-f84bbbe1cdf8" />
+
 -------------------------------------------------------------
 
 ### 感谢支持！微信打赏甬哥侃侃侃ygkkk
@@ -304,8 +240,5 @@ curl -sSL https://gitlab.com/rwkgyg/CFwarp/raw/main/point/CFcdnym.sh -o CFcdnym.
 
 -------------------------------------------------------------
 
-### 感谢你右上角的star🌟
-[![Stargazers over time](https://starchart.cc/yonggekkk/Cloudflare-workers-pages-vless.svg)](https://starchart.cc/yonggekkk/Cloudflare-workers-pages-vless)
-------------------------------------------------------------------------
 ### 代码来源：[ca110us](https://github.com/ca110us/epeius)、[emn178](https://github.com/emn178/js-sha256/blob/master/src/sha256.js)、[3Kmfi6HP](https://github.com/3Kmfi6HP/EDtunnel)、[badafans](https://github.com/badafans/Cloudflare-IP-SpeedTest)、[XIU2](https://github.com/XIU2/CloudflareSpeedTest)
 ### 声明：所有代码来源于Github社区，并通过ChatGPT进行整合
